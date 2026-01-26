@@ -149,6 +149,62 @@ The pipeline extracts data from the following tables:
 - Persistency (13M, 25M, 37M, 49M, 61M - Policy based)
 - Number of Offices
 
+## KPI × Granularity × Source Matrix
+
+The following matrix shows which KPIs are available at different levels of granularity and their source tables:
+
+| KPI | Year Range | Individual/Group | Product Category (L1/L2/L3) | Distribution Channel | State Breakdown | Source Table(s) |
+|-----|------------|------------------|------------------------------|----------------------|-----------------|------------------|
+| **Total Premium** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 2 |
+| **Total Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
+| **New Business Premium** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 3 |
+| **New Business Premium** | 2015-2024 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
+| **New Business Premium** | 2015-2024 | Group | ❌ | ❌ | ✅ State | Part I - Table 8 |
+| **New Business Premium** | 2024 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
+| **New Business Premium** | 2024 only | Group | ❌ | ✅ All Channels | ❌ | Part V - Table 102 |
+| **New Business Policy** | 2015-2024 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
+| **New Business Policy** | 2024 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
+| **Total Policy (Year-End)** | 2015-2024 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 10 |
+| **Sum Assured (Year-End)** | 2015-2024 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 11 |
+| **Assets Under Management** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 21 |
+| **Solvency Ratio** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 23 |
+| **Persistency (13M/25M/37M/49M/61M)** | 2015-2024 | Individual | ❌ | ❌ | ❌ | Part I - Table 28 |
+| **Number of Offices** | 2015-2024 | Not Applicable | ❌ | ❌ | ✅ State | Part I - Table 29 |
+
+### Granularity Definitions
+
+**Individual/Group**: Business segment categorization
+- `Individual`: Retail/individual policies
+- `Group`: Corporate/group schemes
+- `Not Applicable`: KPI applies to both or neither
+
+**Product Category (L1/L2/L3)**: Three-level product classification
+- **L1**: `Linked` or `Non-Linked`
+- **L2**: `Participating` or `Non-Participating` (rarely populated)
+- **L3**: `Life`, `Annuity`, `Pension`, or `Health`
+
+**Distribution Channel**: Sales channel categorization (12 channels)
+- Individual Agents
+- Corporate Agents - Banks
+- Corporate Agents - Others
+- Brokers
+- Direct Selling
+- MI Agents
+- CSCs (Common Service Centres)
+- Web Aggregators
+- IMF (Insurance Marketing Firms)
+- Online
+- POS (Point of Sales)
+- Others
+
+**State Breakdown**: Geographic breakdown by Indian state/union territory (available in separate `state_breakdown.xlsx` file)
+
+### Notes on Granularity
+- Most KPIs are available from FY 2014-15 (ending 2015) through FY 2023-24 (ending 2024)
+- Distribution channel breakdowns are only available for FY 2023-24 (2024) from Part V
+- Product category breakdowns (L1/L2/L3) are available for in-force business metrics (Tables 10 & 11)
+- State-level breakdowns are maintained in a separate output file: `state_breakdown.xlsx`
+
 ## Configuration
 
 Key configuration parameters in `data_treatment.py`:

@@ -113,6 +113,7 @@ INSURER_CANONICAL_NAMES = {
     'bandhan life insurance ltd': 'Bandhan Life',
     'bandhan life insurance': 'Bandhan Life',
     'bandhan life': 'Bandhan Life',
+    'bandhan': 'Bandhan Life',
     'acko life insurance ltd': 'Acko Life',
     'acko life insurance': 'Acko Life',
     'acko life': 'Acko Life',
@@ -120,9 +121,11 @@ INSURER_CANONICAL_NAMES = {
     'creditaccess life insurance ltd': 'Credit Access Life',
     'credit access life': 'Credit Access Life',
     'creditaccess life': 'Credit Access Life',
+    'cal': 'Credit Access Life',
     'go digit life': 'Go Digit Life',
     'go digit life insurance': 'Go Digit Life',
     'go digit life insurance limited': 'Go Digit Life',
+    'godigit': 'Go Digit Life',
     'pramerica life insurance company ltd': 'Pramerica Life',
     'pramerica life insurance ltd': 'Pramerica Life',
     'pramerica life insurance': 'Pramerica Life',
@@ -137,6 +140,7 @@ INSURER_CANONICAL_NAMES = {
     'sahara india life': 'Sahara India Life',
     'sahara india': 'Sahara India Life',
     'sahara life': 'Sahara India Life',
+    'sahara': 'Sahara India Life',
     'shriram life insurance company ltd': 'Shriram Life',
     'shriram life insurance': 'Shriram Life',
     'shriram life': 'Shriram Life',
@@ -853,21 +857,31 @@ def extract_table_12(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame
     # Row 4: Years
     # Row 5+: Data rows
     
-    # Column mapping:
-    # A. LINKED PREMIUM e.Total: cols 42-51 (years 2014-15 to 2023-24)
-    # B. NON-LINKED PREMIUM e.Total: cols 92-101 (years 2014-15 to 2023-24)
+    # Column mapping (approximate - adjust based on actual structure):
+    # A. LINKED PREMIUM:
+    #   - c. New Business: cols 32-41 (years 2014-15 to 2023-24)
+    #   - d. Renewal: cols 22-31 (years 2014-15 to 2023-24)
+    #   - e. Total: cols 42-51 (years 2014-15 to 2023-24)
+    # B. NON-LINKED PREMIUM:
+    #   - c. New Business: cols 82-91 (years 2014-15 to 2023-24)
+    #   - d. Renewal: cols 72-81 (years 2014-15 to 2023-24)
+    #   - e. Total: cols 92-101 (years 2014-15 to 2023-24)
     
     year_row = 4
     data_start = 6  # Skip header rows and "Public Sector" label
     
-    # Define column groups for Total Premium
+    # Define column groups for different KPIs
     column_groups = [
-        ('Linked', range(42, 52)),      # e.Total for Linked
-        ('Non-Linked', range(92, 102)), # e.Total for Non-Linked
+        ('Linked', 'New Business Premium', range(32, 42)),
+        ('Linked', 'Renewal Premium', range(22, 32)),
+        ('Linked', 'Total Premium', range(42, 52)),
+        ('Non-Linked', 'New Business Premium', range(82, 92)),
+        ('Non-Linked', 'Renewal Premium', range(72, 82)),
+        ('Non-Linked', 'Total Premium', range(92, 102)),
     ]
     
     # Get years for each group
-    for l1_category, col_range in column_groups:
+    for l1_category, kpi, col_range in column_groups:
         year_cols = []
         for col in col_range:
             year_val = df.iloc[year_row, col] if year_row < len(df) and col < len(df.columns) else None
@@ -899,7 +913,7 @@ def extract_table_12(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame
                             'L3': '',
                             'Individual_Group': 'Not Applicable',
                             'Distribution_Channel': '',
-                            'KPI': 'Total Premium',
+                            'KPI': kpi,
                             'Value': value,
                             'Source': 'Part I - Table 12'
                         })
@@ -1634,7 +1648,7 @@ def run_etl(part1_path: str, part5_path: str, output_dir: str) -> Dict[str, pd.D
         {'Column': 'L3', 'Description': 'Product category Level 3', 'Type': 'String', 'Notes': 'Values: Life, Annuity, Pension, Health, or blank'},
         {'Column': 'Individual_Group', 'Description': 'Business segment', 'Type': 'String', 'Notes': 'Values: Individual, Group, Not Applicable'},
         {'Column': 'Distribution_Channel', 'Description': 'Sales channel', 'Type': 'String', 'Notes': 'Values: Individual Agents, Corporate Agents - Banks, Corporate Agents - Others, Brokers, Direct Selling, MI Agents, CSCs, Web Aggregators, IMF, Online, POS, Others, Not Applicable'},
-        {'Column': 'KPI', 'Description': 'Key Performance Indicator', 'Type': 'String', 'Notes': 'Total Premium, New Business Premium, New Business Policy, Total Policy (Year-End), Sum Assured (Year-End), Assets Under Management, Solvency Ratio, Persistency (13M/25M/37M/49M/61M, Policy/Premium), Number of Offices'},
+        {'Column': 'KPI', 'Description': 'Key Performance Indicator', 'Type': 'String', 'Notes': 'Total Premium, New Business Premium, Renewal Premium, New Business Policy, Total Policy (Year-End), Sum Assured (Year-End), Assets Under Management, Solvency Ratio, Persistency (13M/25M/37M/49M/61M, Policy/Premium), Number of Offices'},
         {'Column': 'Value', 'Description': 'Metric value', 'Type': 'Float', 'Notes': 'Units: Premium/Sum Assured/AUM in â‚¹ absolute (converted from Crore Ã— 10,000,000); Policies/Offices as integers; Persistency 0-100; Solvency as-is'},
         {'Column': 'Source', 'Description': 'Source table reference', 'Type': 'String', 'Notes': 'Table number from IRDAI handbook'},
     ])

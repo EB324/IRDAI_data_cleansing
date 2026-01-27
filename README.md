@@ -141,6 +141,7 @@ The pipeline extracts data from the following tables:
 
 - Total Premium
 - New Business Premium
+- Renewal Premium
 - New Business Policy (count)
 - Total Policy (Year-End)
 - Sum Assured (Year-End)
@@ -158,10 +159,12 @@ The following matrix shows which KPIs are available at different levels of granu
 | **Total Premium** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 2 |
 | **Total Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
 | **New Business Premium** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 3 |
+| **New Business Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
 | **New Business Premium** | 2015-2024 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
 | **New Business Premium** | 2015-2024 | Group | ❌ | ❌ | ✅ State | Part I - Table 8 |
 | **New Business Premium** | 2024 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
 | **New Business Premium** | 2024 only | Group | ❌ | ✅ All Channels | ❌ | Part V - Table 102 |
+| **Renewal Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
 | **New Business Policy** | 2015-2024 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
 | **New Business Policy** | 2024 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
 | **Total Policy (Year-End)** | 2015-2024 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 10 |

@@ -259,7 +259,7 @@ State names are standardized using the mapping below to handle variations in spe
 | Bihar | Bihar |
 | Chandigarh | Chandigarh |
 | Chhattisgarh | Chattisgarh, Chhattisgarh |
-| Dadra and Nagar Haveli and Daman and Diu | Dadra and Nagar Haveli, Dadra and Nagar Haveli and Daman and Diu, Daman and Diu, Daman, Diu, Dadra & Nagar Haveli |
+| Dadra and Nagar Haveli and Daman and Diu | Dadra and Nagar Haveli, Dadra and Nagar Haveli and Daman and Diu, Daman and Diu, Daman, Diu, Dadra & Nagar Haveli, Dadra & Nagra Haveli and Daman & Diu |
 | NCT of Delhi | Delhi, Delhi (NCT), NCT of Delhi |
 | Goa | Goa |
 | Gujarat | Gujarat |

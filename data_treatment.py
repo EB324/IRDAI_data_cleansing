@@ -198,6 +198,7 @@ STATE_MAPPING = {
     'dadra and nagar haveli and daman and diu': 'Dadra and Nagar Haveli and Daman and Diu',
     'daman and diu': 'Dadra and Nagar Haveli and Daman and Diu',
     'daman, diu, dadra & nagar haveli': 'Dadra and Nagar Haveli and Daman and Diu',
+    'dadra & nagra haveli and daman & diu': 'Dadra and Nagar Haveli and Daman and Diu',
     'delhi': 'NCT of Delhi',
     'delhi (nct)': 'NCT of Delhi',
     'nct of delhi': 'NCT of Delhi',

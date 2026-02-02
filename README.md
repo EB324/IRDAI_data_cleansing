@@ -286,7 +286,7 @@ State names are standardized using the mapping below to handle variations in spe
 | Telangana | Telangana |
 | Tripura | Tripura |
 | Uttar Pradesh | Uttar Pradesh |
-| Uttarakhand | Uttarakhand |
+| Uttarakhand | Uttarakhand, Uttrakhand |
 | West Bengal | West Bengal |
 
 *Note: State standardization is applied to all state-wise data extractions (Tables 6, 8, and 29). The mapping handles common spelling variations (e.g., "Jharkand" → "Jharkhand"), union territory mergers (e.g., Dadra and Nagar Haveli + Daman and Diu), and formatting differences (e.g., "TamilNadu" → "Tamil Nadu").*

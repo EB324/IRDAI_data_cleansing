@@ -231,6 +231,7 @@ STATE_MAPPING = {
     'tripura': 'Tripura',
     'uttar pradesh': 'Uttar Pradesh',
     'uttarakhand': 'Uttarakhand',
+    'uttrakhand': 'Uttarakhand',
     'west bengal': 'West Bengal',
 }
 

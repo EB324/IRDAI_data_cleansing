@@ -182,6 +182,58 @@ CHANNEL_MAPPING = {
     'referrals': 'Referrals',
 }
 
+# State name normalization
+STATE_MAPPING = {
+    'andaman and nicobar': 'Andaman & Nicobar',
+    'andaman & nicobar islands': 'Andaman & Nicobar',
+    'andaman & nicobar': 'Andaman & Nicobar',
+    'andhra pradesh': 'Andhra Pradesh',
+    'arunachal pradesh': 'Arunachal Pradesh',
+    'assam': 'Assam',
+    'bihar': 'Bihar',
+    'chandigarh': 'Chandigarh',
+    'chattisgarh': 'Chhattisgarh',
+    'chhattisgarh': 'Chhattisgarh',
+    'dadra and nagar haveli': 'Dadra and Nagar Haveli and Daman and Diu',
+    'dadra and nagar haveli and daman and diu': 'Dadra and Nagar Haveli and Daman and Diu',
+    'daman and diu': 'Dadra and Nagar Haveli and Daman and Diu',
+    'daman, diu, dadra & nagar haveli': 'Dadra and Nagar Haveli and Daman and Diu',
+    'delhi': 'NCT of Delhi',
+    'delhi (nct)': 'NCT of Delhi',
+    'nct of delhi': 'NCT of Delhi',
+    'goa': 'Goa',
+    'gujarat': 'Gujarat',
+    'haryana': 'Haryana',
+    'himachal pradesh': 'Himachal Pradesh',
+    'jammu and kashmir': 'Jammu & Kashmir',
+    'jammu & kashmir': 'Jammu & Kashmir',
+    'jharkand': 'Jharkhand',
+    'jharkhand': 'Jharkhand',
+    'karnataka': 'Karnataka',
+    'kerala': 'Kerala',
+    'ladakh': 'Ladakh',
+    'lakshadweep': 'Lakshadweep',
+    'madhya pradesh': 'Madhya Pradesh',
+    'maharashtra': 'Maharashtra',
+    'manipur': 'Manipur',
+    'meghalaya': 'Meghalaya',
+    'mizoram': 'Mizoram',
+    'nagaland': 'Nagaland',
+    'odisha': 'Odisha',
+    'puducherry': 'Puducherry',
+    'punjab': 'Punjab',
+    'rajashtan': 'Rajasthan',
+    'rajasthan': 'Rajasthan',
+    'sikkim': 'Sikkim',
+    'tamilnadu': 'Tamil Nadu',
+    'tamil nadu': 'Tamil Nadu',
+    'telangana': 'Telangana',
+    'tripura': 'Tripura',
+    'uttar pradesh': 'Uttar Pradesh',
+    'uttarakhand': 'Uttarakhand',
+    'west bengal': 'West Bengal',
+}
+
 # Product category L1/L2/L3 parsing rules
 CATEGORY_MAPPINGS = {
     # L1 categories
@@ -308,6 +360,13 @@ def normalize_channel(channel: str) -> str:
         return ''
     channel_lower = channel.lower().strip()
     return CHANNEL_MAPPING.get(channel_lower, channel.strip())
+
+def standardize_state(state: str) -> str:
+    """Standardize state name using mapping."""
+    if pd.isna(state) or not isinstance(state, str):
+        return ''
+    state_lower = state.lower().strip()
+    return STATE_MAPPING.get(state_lower, state.strip())
 
 def convert_crore_to_rupees(value, is_crore: bool = True) -> Optional[float]:
     """Convert value from Crore to absolute Rupees."""
@@ -500,13 +559,15 @@ def extract_table_6(xlsx_path: str, name_xwalk: Dict[str, str]) -> Tuple[pd.Data
     # Extract data rows
     for i in range(data_start, len(df)):
         row = df.iloc[i]
-        state = row.iloc[1] if len(row) > 1 else None
+        state_raw = row.iloc[1] if len(row) > 1 else None
         
-        if pd.isna(state) or not isinstance(state, str):
+        if pd.isna(state_raw) or not isinstance(state_raw, str):
             continue
-        state = state.strip()
-        if not state or state.lower() in ['total', 'grand total', 'all india', 's.no.', 'private total', 'private sector total', 'public sector total']:
+        state_raw = state_raw.strip()
+        if not state_raw or state_raw.lower() in ['total', 'grand total', 'all india', 's.no.', 'private total', 'private sector total', 'public sector total']:
             continue
+        
+        state = standardize_state(state_raw)
         
         for col, insurer_raw, year, kpi in col_info:
             if col < len(row):
@@ -602,13 +663,15 @@ def extract_table_8(xlsx_path: str, name_xwalk: Dict[str, str]) -> Tuple[pd.Data
     # Extract data rows
     for i in range(data_start, len(df)):
         row = df.iloc[i]
-        state = row.iloc[1] if len(row) > 1 else None
+        state_raw = row.iloc[1] if len(row) > 1 else None
         
-        if pd.isna(state) or not isinstance(state, str):
+        if pd.isna(state_raw) or not isinstance(state_raw, str):
             continue
-        state = state.strip()
-        if not state or state.lower() in ['total', 'grand total', 'all india', 's.no.', 'private total', 'private sector total', 'public sector total']:
+        state_raw = state_raw.strip()
+        if not state_raw or state_raw.lower() in ['total', 'grand total', 'all india', 's.no.', 'private total', 'private sector total', 'public sector total']:
             continue
+        
+        state = standardize_state(state_raw)
         
         for col, insurer_raw, year, kpi in col_info:
             if col < len(row):
@@ -1178,12 +1241,14 @@ def extract_table_29(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame
     
     # Extract data for each insurer and state
     for row_idx in range(3, 39):  # States are in rows 3-38
-        state_name = df.iloc[row_idx, 1]
-        if pd.isna(state_name):
+        state_raw = df.iloc[row_idx, 1]
+        if pd.isna(state_raw):
             continue
-        state_name = str(state_name).strip()
-        if state_name.lower() in ['total', 'grand total', 'nan', '']:
+        state_raw = str(state_raw).strip()
+        if state_raw.lower() in ['total', 'grand total', 'nan', '']:
             continue
+        
+        state_name = standardize_state(state_raw)
         
         for insurer, (start_col, end_col) in insurer_cols.items():
             for col_idx in range(start_col, end_col + 1):

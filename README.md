@@ -123,6 +123,7 @@ The pipeline extracts data from the following tables:
 
 ### Data Standardization
 - **Insurer Names**: Fuzzy matching algorithm standardizes insurer names across sources
+- **State Names**: Direct mapping standardizes state name variations, spelling errors, and union territory mergers
 - **Product Categories**: Three-level categorization (L1: Linked/Non-Linked, L2: Participating/Non-Participating, L3: Life/Annuity/Pension/Health)
 - **Distribution Channels**: Normalized channel names (Individual Agents, Banks, Brokers, etc.)
 
@@ -208,6 +209,88 @@ The following matrix shows which KPIs are available at different levels of granu
 - Product category breakdowns (L1/L2/L3) are available for in-force business metrics (Tables 10 & 11)
 - State-level breakdowns are maintained in a separate output file: `state_breakdown.xlsx`
 
+## Data Mappings
+
+### Insurer Name Mapping
+
+The ETL pipeline standardizes various insurer name formats into canonical names. Multiple source name variations are mapped to a single display name:
+
+| Display Name | Source Name(s) |
+|-------------|----------------|
+| LIC | life insurance corporation of india, lic of india, lic |
+| ABSLI | aditya birla sunlife insurance company ltd, aditya birla sun life insurance company ltd, aditya birla sunlife, aditya birla sun life, aditya birla sunlife insurance co ltd |
+| ICICI Pru Life | icici prudential life insurance company ltd, icici prudential life insurance, icici prudential life, icici prudential, icici pru life |
+| SBI Life | sbi life insurance company ltd, sbi life insurance, sbi life |
+| MaxLife | max life insurance company ltd, max life insurance, maxlife insurance company ltd, maxlife |
+| Tata AIA | tata aia life insurance company ltd, tata aia life insurance, tata aia life, tata aia |
+| PNB Metlife | pnb metlife india insurance company ltd, pnb metlife insurance co ltd, pnb metlife india insurance, pnb metlife |
+| Canara HSBC | canara hsbc obc life insurance company ltd, canara hsbc life insurance company ltd, canara hsbc obc life insurance, canara hsbc life insurance, canara hsbc obc life, canara hsbc life, canara hsbc obc, canara hsbc |
+| HDFC Life | hdfc life insurance company ltd, hdfc life insurance, hdfc life, hdfc |
+| Kotak Life | kotak mahindra life insurance ltd, kotak mahindra life insurance, kotak mahindra life, kotak mahindra, kotak life, kotak |
+| Bajaj Allianz Life | bajaj allianz life insurance company ltd, bajaj allianz life insurance, bajaj allianz life, bajaj allianz |
+| Bharti AXA Life | bharti axa life insurance company ltd, bharti axa life insurance co ltd, bharti axa life insurance, bharti axa life, bharti-axa life insurance co ltd, bharti-axa life, bharti-axa, bharti axa |
+| Exide Life | exide life insurance company ltd, exide life insurance co ltd, exide life insurance, exide life, exide |
+| Aviva Life | aviva life insurance company india ltd, aviva life insurance, aviva life, aviva |
+| Ageas Federal Life | ageas federal life insurance company ltd, ageas federal life insurance co ltd, aegas federal life insurance co ltd, ageas federal life insurance, ageas federal life, aegas federal life, ageas federal, aegas federal, ageas |
+| Future Generali Life | future generali india life insurance company ltd, future generali india life insurance, future generali life, future generali |
+| Edelweiss Tokio Life | edelweiss tokio life insurance company ltd, edelweiss tokio life insurance, edelweiss tokio life, edelweiss tokio |
+| IndiaFirst Life | indiafirst life insurance company ltd, indiafirst life insurance, indiafirst life, indiafirst |
+| Bandhan Life | bandhan life insurance company ltd, bandhan life insurance ltd, bandhan life insurance, bandhan life, bandhan |
+| Acko Life | acko life insurance ltd, acko life insurance, acko life |
+| Credit Access Life | credit access life insurance ltd, creditaccess life insurance ltd, credit access life, creditaccess life, cal |
+| Go Digit Life | go digit life, go digit life insurance, go digit life insurance limited, godigit |
+| Pramerica Life | pramerica life insurance company ltd, pramerica life insurance ltd, pramerica life insurance, pramerica life, pramerica |
+| Reliance Nippon Life | reliance nippon life insurance company ltd, reliance nippon life insurance, reliance nippon life, reliance nippon |
+| Sahara India Life | sahara india life insurance company ltd, sahara india life insurance, sahara india life, sahara india, sahara life, sahara |
+| Shriram Life | shriram life insurance company ltd, shriram life insurance, shriram life, shriram |
+| Star Union Dai-ichi Life | star union dai-ichi life insurance company ltd, star union dai-ichi life insurance, star union dai-ichi life, star union dai-ichi, sud life |
+| Aegon Life | aegon life insurance company ltd, aegon life insurance, aegon life |
+
+### State Name Mapping
+
+State names are standardized using the mapping below to handle variations in spelling, formatting, and union territory mergers:
+
+| Display Name | Source Name(s) |
+|-------------|----------------|
+| Andaman & Nicobar | Andaman and Nicobar, Andaman & Nicobar Islands, Andaman & Nicobar |
+| Andhra Pradesh | Andhra Pradesh |
+| Arunachal Pradesh | Arunachal Pradesh |
+| Assam | Assam |
+| Bihar | Bihar |
+| Chandigarh | Chandigarh |
+| Chhattisgarh | Chattisgarh, Chhattisgarh |
+| Dadra and Nagar Haveli and Daman and Diu | Dadra and Nagar Haveli, Dadra and Nagar Haveli and Daman and Diu, Daman and Diu, Daman, Diu, Dadra & Nagar Haveli |
+| NCT of Delhi | Delhi, Delhi (NCT), NCT of Delhi |
+| Goa | Goa |
+| Gujarat | Gujarat |
+| Haryana | Haryana |
+| Himachal Pradesh | Himachal Pradesh |
+| Jammu & Kashmir | Jammu and Kashmir, Jammu & Kashmir |
+| Jharkhand | Jharkand, Jharkhand |
+| Karnataka | Karnataka |
+| Kerala | Kerala |
+| Ladakh | Ladakh |
+| Lakshadweep | Lakshadweep |
+| Madhya Pradesh | Madhya Pradesh |
+| Maharashtra | Maharashtra |
+| Manipur | Manipur |
+| Meghalaya | Meghalaya |
+| Mizoram | Mizoram |
+| Nagaland | Nagaland |
+| Odisha | Odisha |
+| Puducherry | Puducherry |
+| Punjab | Punjab |
+| Rajasthan | Rajashtan, Rajasthan |
+| Sikkim | Sikkim |
+| Tamil Nadu | TamilNadu, Tamilnadu, Tamil Nadu |
+| Telangana | Telangana |
+| Tripura | Tripura |
+| Uttar Pradesh | Uttar Pradesh |
+| Uttarakhand | Uttarakhand |
+| West Bengal | West Bengal |
+
+*Note: State standardization is applied to all state-wise data extractions (Tables 6, 8, and 29). The mapping handles common spelling variations (e.g., "Jharkand" → "Jharkhand"), union territory mergers (e.g., Dadra and Nagar Haveli + Daman and Diu), and formatting differences (e.g., "TamilNadu" → "Tamil Nadu").*
+
 ## Configuration
 
 Key configuration parameters in `data_treatment.py`:
@@ -215,6 +298,7 @@ Key configuration parameters in `data_treatment.py`:
 ```python
 CRORE_TO_RUPEES = 10_000_000  # Conversion factor
 INSURER_CANONICAL_NAMES = {...}  # Name standardization dictionary
+STATE_MAPPING = {...}  # State name standardization dictionary
 CHANNEL_MAPPING = {...}  # Distribution channel normalization
 ```
 

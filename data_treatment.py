@@ -26,6 +26,7 @@ INSURER_CANONICAL_NAMES = {
     'lic': 'LIC',
     'aditya birla sunlife insurance company ltd': 'ABSLI',
     'aditya birla sun life insurance company ltd': 'ABSLI',
+    'aditya birla sun life insurance company limited': 'ABSLI',
     'aditya birla sunlife': 'ABSLI',
     'aditya birla sun life': 'ABSLI',
     'aditya birla sunlife insurance co ltd': 'ABSLI',
@@ -35,17 +36,28 @@ INSURER_CANONICAL_NAMES = {
     'icici prudential': 'ICICI Pru Life',
     'icici pru life': 'ICICI Pru Life',
     'sbi life insurance company ltd': 'SBI Life',
+    'sbi life insurance company limited': 'SBI Life',
     'sbi life insurance': 'SBI Life',
     'sbi life': 'SBI Life',
     'max life insurance company ltd': 'MaxLife',
     'max life insurance': 'MaxLife',
     'maxlife insurance company ltd': 'MaxLife',
     'maxlife': 'MaxLife',
+    'axis maxlife  insurance company ltd': 'MaxLife',
+    'axis maxlife insurance company ltd': 'MaxLife',
+    'axis max life insurance company ltd': 'MaxLife',
+    'axis max life insurance limited': 'MaxLife',
+    'axis max life insurance': 'MaxLife',
+    'axis max life': 'MaxLife',
+    'axis maxlife': 'MaxLife',
     'tata aia life insurance company ltd': 'Tata AIA',
+    'tata aia life insurance co ltd': 'Tata AIA',
+    'tata aia life insurance co. ltd': 'Tata AIA',
     'tata aia life insurance': 'Tata AIA',
     'tata aia life': 'Tata AIA',
     'tata aia': 'Tata AIA',
     'pnb metlife india insurance company ltd': 'PNB Metlife',
+    'pnb metlife india insurance co ltd': 'PNB Metlife',
     'pnb metlife insurance co ltd': 'PNB Metlife',
     'pnb metlife india insurance': 'PNB Metlife',
     'pnb metlife': 'PNB Metlife',
@@ -65,9 +77,13 @@ INSURER_CANONICAL_NAMES = {
     'kotak mahindra life insurance': 'Kotak Life',
     'kotak mahindra life': 'Kotak Life',
     'kotak mahindra': 'Kotak Life',
+    'kotak mahindra om life insurance co ltd': 'Kotak Life',
+    'kotak mahindra om life insurance': 'Kotak Life',
+    'kotak mahindra om life': 'Kotak Life',
     'kotak life': 'Kotak Life',
     'kotak': 'Kotak Life',
     'bajaj allianz life insurance company ltd': 'Bajaj Allianz Life',
+    'bajaj allianz life insurance co ltd': 'Bajaj Allianz Life',
     'bajaj allianz life insurance': 'Bajaj Allianz Life',
     'bajaj allianz life': 'Bajaj Allianz Life',
     'bajaj allianz': 'Bajaj Allianz Life',
@@ -85,12 +101,15 @@ INSURER_CANONICAL_NAMES = {
     'exide life': 'Exide Life',
     'exide': 'Exide Life',
     'aviva life insurance company india ltd': 'Aviva Life',
+    'aviva life insurance company india limited': 'Aviva Life',
     'aviva life insurance': 'Aviva Life',
     'aviva life': 'Aviva Life',
     'aviva': 'Aviva Life',
     'ageas federal life insurance company ltd': 'Ageas Federal Life',
     'ageas federal life insurance co ltd': 'Ageas Federal Life',
     'aegas federal life insurance co ltd': 'Ageas Federal Life',
+    'aegas federal life insurance company limited': 'Ageas Federal Life',
+    'ageas federal life insurance company limited': 'Ageas Federal Life',
     'ageas federal life insurance': 'Ageas Federal Life',
     'ageas federal life': 'Ageas Federal Life',
     'aegas federal life': 'Ageas Federal Life',
@@ -98,6 +117,7 @@ INSURER_CANONICAL_NAMES = {
     'aegas federal': 'Ageas Federal Life',
     'ageas': 'Ageas Federal Life',
     'future generali india life insurance company ltd': 'Future Generali Life',
+    'future generali india life insurance company limited': 'Future Generali Life',
     'future generali india life insurance': 'Future Generali Life',
     'future generali life': 'Future Generali Life',
     'future generali': 'Future Generali Life',
@@ -105,33 +125,51 @@ INSURER_CANONICAL_NAMES = {
     'edelweiss tokio life insurance': 'Edelweiss Tokio Life',
     'edelweiss tokio life': 'Edelweiss Tokio Life',
     'edelweiss tokio': 'Edelweiss Tokio Life',
+    'edelweiss life insurance company ltd': 'Edelweiss Tokio Life',
+    'edelweiss life insurance company limited': 'Edelweiss Tokio Life',
+    'edelweiss life insurance co ltd': 'Edelweiss Tokio Life',
+    'edelweiss life insurance': 'Edelweiss Tokio Life',
+    'edelweiss life': 'Edelweiss Tokio Life',
     'indiafirst life insurance company ltd': 'IndiaFirst Life',
+    'indiafirst life insurance company limited': 'IndiaFirst Life',
+    'indiafirst life insurance limited': 'IndiaFirst Life',
     'indiafirst life insurance': 'IndiaFirst Life',
     'indiafirst life': 'IndiaFirst Life',
     'indiafirst': 'IndiaFirst Life',
     'bandhan life insurance company ltd': 'Bandhan Life',
     'bandhan life insurance ltd': 'Bandhan Life',
+    'bandhan life insurance company limited': 'Bandhan Life',
+    'bandhan life insurance limited': 'Bandhan Life',
     'bandhan life insurance': 'Bandhan Life',
     'bandhan life': 'Bandhan Life',
     'bandhan': 'Bandhan Life',
     'acko life insurance ltd': 'Acko Life',
     'acko life insurance': 'Acko Life',
+    'acko life insurance limited': 'Acko Life',
     'acko life': 'Acko Life',
     'credit access life insurance ltd': 'Credit Access Life',
     'creditaccess life insurance ltd': 'Credit Access Life',
+    'credit access life insurance company limited': 'Credit Access Life',
+    'credit access life insurance': 'Credit Access Life',
     'credit access life': 'Credit Access Life',
     'creditaccess life': 'Credit Access Life',
     'cal': 'Credit Access Life',
     'go digit life': 'Go Digit Life',
     'go digit life insurance': 'Go Digit Life',
     'go digit life insurance limited': 'Go Digit Life',
+    'go digit life insurance company limited': 'Go Digit Life',
+    'go digit life insurance ltd': 'Go Digit Life',
     'godigit': 'Go Digit Life',
+    'godigit life': 'Go Digit Life',
     'pramerica life insurance company ltd': 'Pramerica Life',
     'pramerica life insurance ltd': 'Pramerica Life',
+    'pramerica life insurance company limited': 'Pramerica Life',
+    'pramerica life insurance limited': 'Pramerica Life',
     'pramerica life insurance': 'Pramerica Life',
     'pramerica life': 'Pramerica Life',
     'pramerica': 'Pramerica Life',
     'reliance nippon life insurance company ltd': 'Reliance Nippon Life',
+    'reliance nippon life insurance company limited': 'Reliance Nippon Life',
     'reliance nippon life insurance': 'Reliance Nippon Life',
     'reliance nippon life': 'Reliance Nippon Life',
     'reliance nippon': 'Reliance Nippon Life',
@@ -142,10 +180,13 @@ INSURER_CANONICAL_NAMES = {
     'sahara life': 'Sahara India Life',
     'sahara': 'Sahara India Life',
     'shriram life insurance company ltd': 'Shriram Life',
+    'shriram life insurance co ltd': 'Shriram Life',
+    'shriram life insurance company limited': 'Shriram Life',
     'shriram life insurance': 'Shriram Life',
     'shriram life': 'Shriram Life',
     'shriram': 'Shriram Life',
     'star union dai-ichi life insurance company ltd': 'Star Union Dai-ichi Life',
+    'star union dai-ichi life insurance company': 'Star Union Dai-ichi Life',
     'star union dai-ichi life insurance': 'Star Union Dai-ichi Life',
     'star union dai-ichi life': 'Star Union Dai-ichi Life',
     'star union dai-ichi': 'Star Union Dai-ichi Life',
@@ -524,7 +565,7 @@ def extract_table_6(xlsx_path: str, name_xwalk: Dict[str, str]) -> Tuple[pd.Data
     data_start = 5
     
     # Exclusion list for aggregate columns
-    excluded_insurers = ['grand total', 'private total', 'private sector total', 'public sector total', 'total', 'industry total']
+    excluded_insurers = ['grand total', 'private total', 'private sector total', 'public sector total', 'total', 'industry total', 'growth rate']
     
     # Parse column structure - track BOTH current_insurer AND current_year
     col_info = []
@@ -630,7 +671,7 @@ def extract_table_8(xlsx_path: str, name_xwalk: Dict[str, str]) -> Tuple[pd.Data
     data_start = 4
     
     # Exclusion list for aggregate columns
-    excluded_insurers = ['grand total', 'private total', 'private sector total', 'public sector total', 'total', 'industry total']
+    excluded_insurers = ['grand total', 'private total', 'private sector total', 'public sector total', 'total', 'industry total', 'growth rate']
     
     # Parse column structure
     col_info = []  # (col, insurer, year, metric_type)
@@ -813,7 +854,11 @@ def extract_table_10(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame
 
 def extract_table_11(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame:
     """Extract Table 11: Sum Assured of Policies in Force by product category."""
-    df = pd.read_excel(xlsx_path, sheet_name='11 ', header=None)
+    # Backward-compatible: new files use '11', old files used '11 ' (trailing space typo)
+    try:
+        df = pd.read_excel(xlsx_path, sheet_name='11', header=None)
+    except ValueError:
+        df = pd.read_excel(xlsx_path, sheet_name='11 ', header=None)
     
     records = []
     
@@ -1256,7 +1301,7 @@ def extract_table_29(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame
             for col_idx in range(start_col, end_col + 1):
                 year_val = year_row.iloc[col_idx]
                 year = parse_year(year_val)
-                if year and 2014 <= year <= 2025:
+                if year and 2014 <= year <= 2030:
                     value = df.iloc[row_idx, col_idx]
                     if pd.notna(value):
                         try:
@@ -1281,10 +1326,18 @@ def extract_table_29(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame
     return pd.DataFrame(records)
 
 def extract_table_100(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame:
-    """Extract Table 100: Individual New Business by Distribution Channel (2023-24)."""
+    """Extract Table 100: Individual New Business by Distribution Channel."""
     df = pd.read_excel(xlsx_path, sheet_name='100', header=None)
     
     records = []
+    
+    # Detect year dynamically from title row (e.g., "... (2023-24)" or "... (2024-25)")
+    title_val = str(df.iloc[0, 0]) if len(df) > 0 else ''
+    year_match = re.search(r'\((\d{4})-(\d{2})\)', title_val)
+    if year_match:
+        table_year = int(year_match.group(1)) + 1  # e.g., "2023-24" -> 2024, "2024-25" -> 2025
+    else:
+        table_year = 2024  # fallback for safety
     
     # Hardcoded column mapping based on actual table structure
     CHANNEL_MAP = {
@@ -1349,7 +1402,7 @@ def extract_table_100(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFram
                 if value is not None:
                     records.append({
                         'Insurer': insurer,
-                        'Year': 2024,
+                        'Year': table_year,
                         'L1': '',
                         'L2': '',
                         'L3': '',
@@ -1363,10 +1416,18 @@ def extract_table_100(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFram
     return pd.DataFrame(records)
 
 def extract_table_102(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFrame:
-    """Extract Table 102: Group New Business by Distribution Channel (2023-24)."""
+    """Extract Table 102: Group New Business by Distribution Channel."""
     df = pd.read_excel(xlsx_path, sheet_name='102', header=None)
     
     records = []
+    
+    # Detect year dynamically from title row
+    title_val = str(df.iloc[0, 0]) if len(df) > 0 else ''
+    year_match = re.search(r'\((\d{4})-(\d{2})\)', title_val)
+    if year_match:
+        table_year = int(year_match.group(1)) + 1
+    else:
+        table_year = 2024  # fallback for safety
     
     # Hardcoded column mapping based on actual table structure
     # Each channel has: Schemes, Premium, Lives covered (3 columns each)
@@ -1424,7 +1485,7 @@ def extract_table_102(xlsx_path: str, name_xwalk: Dict[str, str]) -> pd.DataFram
                 if value is not None:
                     records.append({
                         'Insurer': insurer,
-                        'Year': 2024,
+                        'Year': table_year,
                         'L1': '',
                         'L2': '',
                         'L3': '',

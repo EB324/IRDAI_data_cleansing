@@ -15,6 +15,8 @@ This project processes insurance industry data from IRDAI handbooks (Part I and 
 - Persistency metrics
 - Office locations
 
+The pipeline is backward-compatible and has been tested against both the FY 2023-24 and FY 2024-25 handbook editions.
+
 ## Project Structure
 
 ```
@@ -23,11 +25,14 @@ IRDAI_data_cleansing/
 ├── requirements.txt           # Python dependencies
 ├── .gitignore                # Git ignore rules (excludes .xlsx files)
 ├── input/                    # Input data folder
-│   ├── Part I.xlsx          # IRDAI Handbook Part I
-│   └── Part V.xlsx          # IRDAI Handbook Part V
+│   ├── Part I.xlsx          # IRDAI Handbook Part I (current year)
+│   ├── Part V.xlsx          # IRDAI Handbook Part V (current year)
+│   └── 2023-24 archive/    # Previous year's data for reference
+│       ├── Part I.xlsx
+│       └── Part V.xlsx
 └── output/                   # Generated outputs
     ├── facts_table.xlsx     # Main facts table
-    ├── state_breakdown_t6_t8.xlsx  # State-level data
+    ├── state_breakdown.xlsx  # State-level data
     └── checks/              # Quality assurance outputs
         ├── name_xwalk.xlsx  # Insurer name standardization mapping
         ├── qa_logs.xlsx     # Data quality validation logs
@@ -80,7 +85,7 @@ The script will:
 - Columns: Insurer, Year, L1, L2, L3, Individual_Group, Distribution_Channel, KPI, Value, Source
 - All financial values in absolute Rupees (₹)
 
-**`state_breakdown_t6_t8.xlsx`**
+**`state_breakdown.xlsx`**
 - State-wise breakdown of business metrics
 - Includes data from Tables 6 (Individual), 8 (Group), and 29 (Offices)
 
@@ -116,8 +121,8 @@ The pipeline extracts data from the following tables:
 - **Table 29**: State-wise Distribution of Offices
 
 ### Part V Tables
-- **Table 100**: Individual New Business by Distribution Channel (2023-24)
-- **Table 102**: Group New Business by Distribution Channel (2023-24)
+- **Table 100**: Individual New Business by Distribution Channel (single-year; year auto-detected from title)
+- **Table 102**: Group New Business by Distribution Channel (single-year; year auto-detected from title)
 
 ## Key Features
 
@@ -153,27 +158,27 @@ The pipeline extracts data from the following tables:
 
 ## KPI × Granularity × Source Matrix
 
-The following matrix shows which KPIs are available at different levels of granularity and their source tables:
+The following matrix shows which KPIs are available at different levels of granularity and their source tables. Year ranges shown are for the FY 2024-25 handbook; the FY 2023-24 handbook covers one year earlier (e.g., 2016-2025 becomes 2015-2024):
 
 | KPI | Year Range | Individual/Group | Product Category (L1/L2/L3) | Distribution Channel | State Breakdown | Source Table(s) |
 |-----|------------|------------------|------------------------------|----------------------|-----------------|------------------|
-| **Total Premium** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 2 |
-| **Total Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
-| **New Business Premium** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 3 |
-| **New Business Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
-| **New Business Premium** | 2015-2024 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
-| **New Business Premium** | 2015-2024 | Group | ❌ | ❌ | ✅ State | Part I - Table 8 |
-| **New Business Premium** | 2024 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
-| **New Business Premium** | 2024 only | Group | ❌ | ✅ All Channels | ❌ | Part V - Table 102 |
-| **Renewal Premium** | 2015-2024 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
-| **New Business Policy** | 2015-2024 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
-| **New Business Policy** | 2024 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
-| **Total Policy (Year-End)** | 2015-2024 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 10 |
-| **Sum Assured (Year-End)** | 2015-2024 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 11 |
-| **Assets Under Management** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 21 |
-| **Solvency Ratio** | 2015-2024 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 23 |
-| **Persistency (13M/25M/37M/49M/61M)** | 2015-2024 | Individual | ❌ | ❌ | ❌ | Part I - Table 28 |
-| **Number of Offices** | 2015-2024 | Not Applicable | ❌ | ❌ | ✅ State | Part I - Table 29 |
+| **Total Premium** | 2016-2025 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 2 |
+| **Total Premium** | 2016-2025 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
+| **New Business Premium** | 2016-2025 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 3 |
+| **New Business Premium** | 2016-2025 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
+| **New Business Premium** | 2024-2025 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
+| **New Business Premium** | 2024-2025 | Group | ❌ | ❌ | ✅ State | Part I - Table 8 |
+| **New Business Premium** | 2025 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
+| **New Business Premium** | 2025 only | Group | ❌ | ✅ All Channels | ❌ | Part V - Table 102 |
+| **Renewal Premium** | 2016-2025 | Not Applicable | ✅ L1 only (Linked/Non-Linked) | ❌ | ❌ | Part I - Table 12 |
+| **New Business Policy** | 2024-2025 | Individual | ❌ | ❌ | ✅ State | Part I - Table 6 |
+| **New Business Policy** | 2025 only | Individual | ❌ | ✅ All Channels | ❌ | Part V - Table 100 |
+| **Total Policy (Year-End)** | 2017-2025 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 10 |
+| **Sum Assured (Year-End)** | 2017-2025 | Individual | ✅ L1/L2/L3 | ❌ | ❌ | Part I - Table 11 |
+| **Assets Under Management** | 2022-2025 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 21 |
+| **Solvency Ratio** | 2016-2025 | Not Applicable | ❌ | ❌ | ❌ | Part I - Table 23 |
+| **Persistency (13M/25M/37M/49M/61M)** | 2016-2025 | Individual | ❌ | ❌ | ❌ | Part I - Table 28 |
+| **Number of Offices** | 2016-2025 | Not Applicable | ❌ | ❌ | ✅ State | Part I - Table 29 |
 
 ### Granularity Definitions
 
@@ -204,8 +209,8 @@ The following matrix shows which KPIs are available at different levels of granu
 **State Breakdown**: Geographic breakdown by Indian state/union territory (available in separate `state_breakdown.xlsx` file)
 
 ### Notes on Granularity
-- Most KPIs are available from FY 2014-15 (ending 2015) through FY 2023-24 (ending 2024)
-- Distribution channel breakdowns are only available for FY 2023-24 (2024) from Part V
+- Each handbook edition provides a rolling 10-year window for most tables. The FY 2024-25 edition covers FY 2015-16 through FY 2024-25; the FY 2023-24 edition covered FY 2014-15 through FY 2023-24.
+- Distribution channel breakdowns (Tables 100/102) are single-year snapshots; the year is auto-detected from the table title.
 - Product category breakdowns (L1/L2/L3) are available for in-force business metrics (Tables 10 & 11)
 - State-level breakdowns are maintained in a separate output file: `state_breakdown.xlsx`
 
@@ -213,38 +218,42 @@ The following matrix shows which KPIs are available at different levels of granu
 
 ### Insurer Name Mapping
 
-The ETL pipeline standardizes various insurer name formats into canonical names. Multiple source name variations are mapped to a single display name:
+The ETL pipeline standardizes various insurer name formats into canonical names. Multiple source name variations are mapped to a single display name. The dictionary handles rebrandings, IRDAI typos, and format inconsistencies across tables and handbook editions:
 
 | Display Name | Source Name(s) |
 |-------------|----------------|
 | LIC | life insurance corporation of india, lic of india, lic |
-| ABSLI | aditya birla sunlife insurance company ltd, aditya birla sun life insurance company ltd, aditya birla sunlife, aditya birla sun life, aditya birla sunlife insurance co ltd |
+| ABSLI | aditya birla sunlife insurance company ltd, aditya birla sun life insurance company ltd, aditya birla sun life insurance company limited, aditya birla sunlife, aditya birla sun life, aditya birla sunlife insurance co ltd |
 | ICICI Pru Life | icici prudential life insurance company ltd, icici prudential life insurance, icici prudential life, icici prudential, icici pru life |
-| SBI Life | sbi life insurance company ltd, sbi life insurance, sbi life |
-| MaxLife | max life insurance company ltd, max life insurance, maxlife insurance company ltd, maxlife |
-| Tata AIA | tata aia life insurance company ltd, tata aia life insurance, tata aia life, tata aia |
-| PNB Metlife | pnb metlife india insurance company ltd, pnb metlife insurance co ltd, pnb metlife india insurance, pnb metlife |
+| SBI Life | sbi life insurance company ltd, sbi life insurance company limited, sbi life insurance, sbi life |
+| MaxLife | max life insurance company ltd, max life insurance, maxlife insurance company ltd, maxlife, axis maxlife  insurance company ltd, axis maxlife insurance company ltd, axis max life insurance company ltd, axis max life insurance limited, axis max life insurance, axis max life, axis maxlife |
+| Tata AIA | tata aia life insurance company ltd, tata aia life insurance co ltd, tata aia life insurance co. ltd, tata aia life insurance, tata aia life, tata aia |
+| PNB Metlife | pnb metlife india insurance company ltd, pnb metlife india insurance co ltd, pnb metlife insurance co ltd, pnb metlife india insurance, pnb metlife |
 | Canara HSBC | canara hsbc obc life insurance company ltd, canara hsbc life insurance company ltd, canara hsbc obc life insurance, canara hsbc life insurance, canara hsbc obc life, canara hsbc life, canara hsbc obc, canara hsbc |
 | HDFC Life | hdfc life insurance company ltd, hdfc life insurance, hdfc life, hdfc |
-| Kotak Life | kotak mahindra life insurance ltd, kotak mahindra life insurance, kotak mahindra life, kotak mahindra, kotak life, kotak |
-| Bajaj Allianz Life | bajaj allianz life insurance company ltd, bajaj allianz life insurance, bajaj allianz life, bajaj allianz |
+| Kotak Life | kotak mahindra life insurance ltd, kotak mahindra life insurance, kotak mahindra life, kotak mahindra, kotak mahindra om life insurance co ltd, kotak mahindra om life insurance, kotak mahindra om life, kotak life, kotak |
+| Bajaj Allianz Life | bajaj allianz life insurance company ltd, bajaj allianz life insurance co ltd, bajaj allianz life insurance, bajaj allianz life, bajaj allianz |
 | Bharti AXA Life | bharti axa life insurance company ltd, bharti axa life insurance co ltd, bharti axa life insurance, bharti axa life, bharti-axa life insurance co ltd, bharti-axa life, bharti-axa, bharti axa |
 | Exide Life | exide life insurance company ltd, exide life insurance co ltd, exide life insurance, exide life, exide |
-| Aviva Life | aviva life insurance company india ltd, aviva life insurance, aviva life, aviva |
-| Ageas Federal Life | ageas federal life insurance company ltd, ageas federal life insurance co ltd, aegas federal life insurance co ltd, ageas federal life insurance, ageas federal life, aegas federal life, ageas federal, aegas federal, ageas |
-| Future Generali Life | future generali india life insurance company ltd, future generali india life insurance, future generali life, future generali |
-| Edelweiss Tokio Life | edelweiss tokio life insurance company ltd, edelweiss tokio life insurance, edelweiss tokio life, edelweiss tokio |
-| IndiaFirst Life | indiafirst life insurance company ltd, indiafirst life insurance, indiafirst life, indiafirst |
-| Bandhan Life | bandhan life insurance company ltd, bandhan life insurance ltd, bandhan life insurance, bandhan life, bandhan |
-| Acko Life | acko life insurance ltd, acko life insurance, acko life |
-| Credit Access Life | credit access life insurance ltd, creditaccess life insurance ltd, credit access life, creditaccess life, cal |
-| Go Digit Life | go digit life, go digit life insurance, go digit life insurance limited, godigit |
-| Pramerica Life | pramerica life insurance company ltd, pramerica life insurance ltd, pramerica life insurance, pramerica life, pramerica |
-| Reliance Nippon Life | reliance nippon life insurance company ltd, reliance nippon life insurance, reliance nippon life, reliance nippon |
+| Aviva Life | aviva life insurance company india ltd, aviva life insurance company india limited, aviva life insurance, aviva life, aviva |
+| Ageas Federal Life | ageas federal life insurance company ltd, ageas federal life insurance co ltd, aegas federal life insurance co ltd, aegas federal life insurance company limited, ageas federal life insurance company limited, ageas federal life insurance, ageas federal life, aegas federal life, ageas federal, aegas federal, ageas |
+| Future Generali Life | future generali india life insurance company ltd, future generali india life insurance company limited, future generali india life insurance, future generali life, future generali |
+| Edelweiss Tokio Life | edelweiss tokio life insurance company ltd, edelweiss tokio life insurance, edelweiss tokio life, edelweiss tokio, edelweiss life insurance company ltd, edelweiss life insurance company limited, edelweiss life insurance co ltd, edelweiss life insurance, edelweiss life |
+| IndiaFirst Life | indiafirst life insurance company ltd, indiafirst life insurance company limited, indiafirst life insurance limited, indiafirst life insurance, indiafirst life, indiafirst |
+| Bandhan Life | bandhan life insurance company ltd, bandhan life insurance ltd, bandhan life insurance company limited, bandhan life insurance limited, bandhan life insurance, bandhan life, bandhan |
+| Acko Life | acko life insurance ltd, acko life insurance, acko life insurance limited, acko life |
+| Credit Access Life | credit access life insurance ltd, creditaccess life insurance ltd, credit access life insurance company limited, credit access life insurance, credit access life, creditaccess life, cal |
+| Go Digit Life | go digit life, go digit life insurance, go digit life insurance limited, go digit life insurance company limited, go digit life insurance ltd, godigit, godigit life |
+| Pramerica Life | pramerica life insurance company ltd, pramerica life insurance ltd, pramerica life insurance company limited, pramerica life insurance limited, pramerica life insurance, pramerica life, pramerica |
+| Reliance Nippon Life | reliance nippon life insurance company ltd, reliance nippon life insurance company limited, reliance nippon life insurance, reliance nippon life, reliance nippon |
 | Sahara India Life | sahara india life insurance company ltd, sahara india life insurance, sahara india life, sahara india, sahara life, sahara |
-| Shriram Life | shriram life insurance company ltd, shriram life insurance, shriram life, shriram |
-| Star Union Dai-ichi Life | star union dai-ichi life insurance company ltd, star union dai-ichi life insurance, star union dai-ichi life, star union dai-ichi, sud life |
+| Shriram Life | shriram life insurance company ltd, shriram life insurance co ltd, shriram life insurance company limited, shriram life insurance, shriram life, shriram |
+| Star Union Dai-ichi Life | star union dai-ichi life insurance company ltd, star union dai-ichi life insurance company, star union dai-ichi life insurance, star union dai-ichi life, star union dai-ichi, sud life |
 | Aegon Life | aegon life insurance company ltd, aegon life insurance, aegon life |
+
+*Note: Several insurers were rebranded between the FY 2023-24 and FY 2024-25 handbooks. MaxLife → Axis MaxLife (effective 12 Dec 2024), Canara HSBC OBC → Canara HSBC (dropped "OBC"), Edelweiss Tokio → Edelweiss (dropped "Tokio", effective 3 Jun 2024), Kotak Mahindra → Kotak Mahindra OM (effective 2024-25), Aegon → Bandhan (effective 5 Apr 2024). All historical and current name variants are handled by the dictionary. The display names are kept stable to avoid breaking downstream dependencies.*
+
+*Note: IRDAI source files contain inconsistent name formats across tables. For example, the FY 2024-25 Table 23 uses "Aegas Federal" (typo for Ageas), "Bajaj Allianz Life Insurance Co Ltd" (shortened), and "Kotak Mahindra OM Life Insurance Co. Ltd." (new brand). The name dictionary covers all known variants.*
 
 ### State Name Mapping
 
@@ -304,14 +313,19 @@ CHANNEL_MAPPING = {...}  # Distribution channel normalization
 
 ## ⚠️ Hard-Coded Elements to Be Aware Of
 
-The ETL script contains several hard-coded elements that may need adjustment if the source file structure changes:
+The ETL script contains several hard-coded elements that may need adjustment if the source file structure changes. Items marked ✅ have been made backward-compatible as of the FY 2024-25 update.
 
-### 1. Sheet Names with Typos
+### 1. ✅ Sheet Names (Backward-Compatible)
+
+Table 11 had a trailing space in its sheet name in the FY 2023-24 source file, which was fixed in FY 2024-25. The script now handles both:
 ```python
-# Table 11 has a trailing space in the sheet name (typo in source file)
-df = pd.read_excel(xlsx_path, sheet_name='11 ', header=None)  # Note the space after '11'
+# Tries '11' first (FY 2024-25), falls back to '11 ' (FY 2023-24)
+try:
+    df = pd.read_excel(xlsx_path, sheet_name='11', header=None)
+except ValueError:
+    df = pd.read_excel(xlsx_path, sheet_name='11 ', header=None)
 ```
-**Action if changed**: Update the `sheet_name` parameter in `extract_table_11()` function
+**Action if changed in future editions**: If the sheet name changes to something else entirely, update the `extract_table_11()` function.
 
 ### 2. Hard-Coded Column Mappings
 
@@ -324,6 +338,8 @@ CHANNEL_MAP = {
     # ... columns 2-25 mapped to specific channels
 }
 ```
+**Status**: Column positions have been stable across FY 2023-24 and FY 2024-25. No change needed.
+
 **Action if changed**: If column positions shift in the source file, update the column numbers in the `CHANNEL_MAP` dictionary in `extract_table_100()`
 
 #### Table 102 (Group by Channel)
@@ -334,6 +350,8 @@ CHANNEL_MAP = {
     # ... every 3rd column mapped (Schemes, Premium, Lives pattern)
 }
 ```
+**Status**: Column positions have been stable across FY 2023-24 and FY 2024-25. No change needed.
+
 **Action if changed**: Update column numbers in `extract_table_102()`. Note that each channel has 3 columns, with Premium in the middle position.
 
 ### 3. Header Row Positions
@@ -345,19 +363,23 @@ year_row = 3       # Row where years appear
 metric_row = 4     # Row where metric types appear
 data_start = 5     # First row of actual data
 ```
+**Status**: Header row positions have been stable across FY 2023-24 and FY 2024-25 for all extracted tables.
+
 **Action if changed**: If source file adds/removes header rows, update these constants in each `extract_table_X()` function
 
-### 4. Hard-Coded Years
+### 4. ✅ Year Detection for Tables 100/102 (Backward-Compatible)
 
-Tables 100 and 102 are hard-coded to year 2024:
+The year for Tables 100 and 102 is now automatically detected from the table title row:
 ```python
-records.append({
-    'Insurer': insurer,
-    'Year': 2024,  # Hard-coded for FY 2023-24
-    # ...
-})
+# Parses year from title, e.g., "... (2024-25)" → 2025
+title_val = str(df.iloc[0, 0])
+year_match = re.search(r'\((\d{4})-(\d{2})\)', title_val)
+if year_match:
+    table_year = int(year_match.group(1)) + 1
+else:
+    table_year = 2024  # fallback
 ```
-**Action if changed**: For new handbook versions, update the year value in `extract_table_100()` and `extract_table_102()`
+**Action if changed**: Only needs updating if IRDAI changes the title format (currently `"TABLE 100: ... (YYYY-YY)"`).
 
 ### 5. Category Mapping Strings
 
@@ -369,15 +391,19 @@ category_map = {
     # ...
 }
 ```
+**Status**: All category labels (including the dash typo in "non linked -general") are identical between FY 2023-24 and FY 2024-25. No change needed.
+
 **Action if changed**: If IRDAI changes category labels or fixes typos (like the dash in "non linked -general"), update the `category_map` dictionary in `extract_table_10()` and `extract_table_11()`
 
 ### 6. Exclusion Lists
 
 Aggregate row detection uses exclusion keywords:
 ```python
-excluded_insurers = ['grand total', 'private total', 'private sector total', 
-                     'public sector total', 'total', 'industry total']
+excluded_insurers = ['grand total', 'private total', 'private sector total',
+                     'public sector total', 'total', 'industry total', 'growth rate']
 ```
+**Note**: `'growth rate'` was added for FY 2024-25, which introduced a "GROWTH RATE" column section in Tables 6 and 8 that was not present in FY 2023-24. This exclusion is safe for both editions.
+
 **Action if changed**: If new aggregate row labels are added, update the `excluded_insurers` list in relevant extraction functions
 
 ### 7. Column Ranges for Table 12
@@ -389,24 +415,47 @@ column_groups = [
     ('Non-Linked', range(92, 102)), # Columns 92-101 for Non-Linked e.Total
 ]
 ```
+**Status**: The "e.Total (c+d)" labels appear at the same 0-indexed column positions (42 and 92) in both FY 2023-24 and FY 2024-25. The year values within those columns shift forward by one year per edition, but the column positions remain stable. No change needed.
+
 **Action if changed**: If column positions shift, update the range values in `extract_table_12()`
 
 ### Validation Checklist
 
 When working with a new handbook version:
-- [ ] Check if sheet names match (especially '11 ' with trailing space)
+- [ ] Check if sheet names match (the Table 11 fallback handles `'11'` and `'11 '` automatically)
 - [ ] Verify header row positions haven't changed
 - [ ] Confirm column positions for Tables 100 and 102
-- [ ] Update hard-coded year for Tables 100 and 102
+- [ ] Verify that the Table 100/102 title format still allows automatic year detection
 - [ ] Review category label strings for typos or changes
-- [ ] Check if new aggregate row labels were introduced
+- [ ] Check if new aggregate row labels or column sections were introduced (like "GROWTH RATE")
+- [ ] Check for insurer rebrandings or name changes; add new variants to `INSURER_CANONICAL_NAMES`
 - [ ] Verify the script runs without errors and review QA logs
+- [ ] Check `name_xwalk.xlsx` output for any unmatched insurers (names mapped to title-case originals rather than canonical names)
+
+## Backward Compatibility
+
+The script has been designed to work with both the FY 2023-24 and FY 2024-25 IRDAI Handbook editions. Key differences handled:
+
+| Aspect | FY 2023-24 | FY 2024-25 | How Handled |
+|--------|-----------|-----------|-------------|
+| Table 11 sheet name | `'11 '` (trailing space) | `'11'` (no space) | Try/except fallback |
+| Tables 100/102 year | 2024 | 2025 | Auto-detected from title |
+| Year ranges | 2014-15 to 2023-24 | 2015-16 to 2024-25 | Dynamic year parsing |
+| MaxLife name | `MaxLife Insurance Company Ltd.` | `Axis MaxLife Insurance Company Ltd.` | Both in name dictionary → `MaxLife` |
+| Canara HSBC name | `Canara HSBC OBC Life...` | `Canara HSBC Life...` | Both in name dictionary → `Canara HSBC` |
+| Edelweiss name | `Edelweiss Tokio Life...` | `Edelweiss Life...` (in some tables) | Both in name dictionary → `Edelweiss Tokio Life` |
+| Kotak name | `Kotak Mahindra Life...` | `Kotak Mahindra OM Life...` | Both in name dictionary → `Kotak Life` |
+| Ageas typo | `Ageas Federal Life...` | `Aegas Federal Life...` (in T23/T28) | Both in name dictionary → `Ageas Federal Life` |
+| Table 6/8 "GROWTH RATE" section | Not present | Present as column group | Added to exclusion list |
+| Table 36 (Rural/Social Sector) | Present | Removed | Not extracted by pipeline |
+| Insurer ordering in Table 2 | Non-alphabetical | Alphabetical | Parsed by name, not position |
+| Table 6/8 new-entrant columns | 2 cols (1 year) for Acko/Credit Access/Go Digit | 4 cols (2 years) for all | Dynamic column parsing |
 
 ## Notes
 
-- Fiscal years are represented by their ending year (e.g., 2024 = FY 2023-24)
+- Fiscal years are represented by their ending year (e.g., 2024 = FY 2023-24, 2025 = FY 2024-25)
 - Negative values are included in the output (e.g., for adjustments or reversals)
-- The pipeline uses fuzzy matching (92% threshold) for insurer name standardization
+- The pipeline uses fuzzy matching (85% threshold) for insurer name standardization
 - Excel files (.xlsx) are excluded from version control via .gitignore
 
 ## Troubleshooting
@@ -416,6 +465,10 @@ When working with a new handbook version:
 **Import errors**: Run `pip install -r requirements.txt` to install all dependencies
 
 **Empty output**: Check the QA logs in `output/checks/qa_logs.xlsx` for extraction issues
+
+**Unrecognized insurer names**: Check `output/checks/name_xwalk.xlsx` for any names that were not matched to canonical names (they will appear as title-cased originals). Add new variants to `INSURER_CANONICAL_NAMES` as needed.
+
+**Sheet not found error**: If a Table 11 extraction fails, check whether the sheet is named `'11'` or `'11 '` (with trailing space). The script handles both, but other sheets could have similar issues in future editions.
 
 ## License
 
